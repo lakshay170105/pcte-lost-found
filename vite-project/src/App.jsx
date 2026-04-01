@@ -13,6 +13,10 @@ import About from './components/About';
 import Contact from './components/Contact';
 import Feedback from './components/Feedback';
 import ItemFeed from './components/ItemFeed';
+import FAQ from './components/FAQ';
+import Support from './components/Support';
+import Terms from './components/Terms';
+import Privacy from './components/Privacy';
 import socket from './socket.js';
 
 function App() {
@@ -25,10 +29,8 @@ function App() {
       const adminFlag = localStorage.getItem('isAdmin') === 'true';
       if (savedUser) setUser(savedUser);
       if (adminFlag) setIsAdmin(true);
-      // Join personal socket room on restore
       if (savedUser?.id) socket.emit('join:user', savedUser.id);
     } catch {
-      // corrupted localStorage — clear it
       localStorage.clear();
     }
   }, []);
@@ -53,33 +55,21 @@ function App() {
         <Route path="/contact" element={<Contact />} />
         <Route path="/feedback" element={<Feedback />} />
         <Route path="/feed" element={<ItemFeed currentUser={user} />} />
+        <Route path="/faq" element={<FAQ />} />
+        <Route path="/support" element={<Support />} />
+        <Route path="/terms" element={<Terms />} />
+        <Route path="/privacy" element={<Privacy />} />
         <Route path="/login" element={
           isLoggedIn ? <Navigate to={isAdmin ? '/admin' : '/dashboard'} replace /> : <LoginSignup setUser={setUser} setIsAdmin={setIsAdmin} />
         } />
 
-        {/* User-only routes */}
-        <Route path="/lost" element={
-          <RequireAuth isAllowed={!!user && !isAdmin}>
-            <Lost user={user} />
-          </RequireAuth>
-        } />
-        <Route path="/found" element={
-          <RequireAuth isAllowed={!!user && !isAdmin}>
-            <Found user={user} />
-          </RequireAuth>
-        } />
-        <Route path="/dashboard" element={
-          <RequireAuth isAllowed={!!user && !isAdmin}>
-            <Dashboard />
-          </RequireAuth>
-        } />
+        {/* User-only */}
+        <Route path="/lost" element={<RequireAuth isAllowed={!!user && !isAdmin}><Lost user={user} /></RequireAuth>} />
+        <Route path="/found" element={<RequireAuth isAllowed={!!user && !isAdmin}><Found user={user} /></RequireAuth>} />
+        <Route path="/dashboard" element={<RequireAuth isAllowed={!!user && !isAdmin}><Dashboard /></RequireAuth>} />
 
-        {/* Admin-only route */}
-        <Route path="/admin" element={
-          <RequireAuth isAdmin={true}>
-            <AdminPanel />
-          </RequireAuth>
-        } />
+        {/* Admin-only */}
+        <Route path="/admin" element={<RequireAuth isAdmin={true}><AdminPanel /></RequireAuth>} />
 
         {/* Catch-all */}
         <Route path="*" element={<Navigate to="/" replace />} />

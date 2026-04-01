@@ -4,13 +4,13 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 const Navbar = ({ isLoggedIn, isAdmin, onLogout }) => {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 900);
   const location = useLocation();
   const navigate = useNavigate();
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 10);
-    const onResize = () => setIsMobile(window.innerWidth <= 768);
+    const onResize = () => setIsMobile(window.innerWidth <= 900);
     window.addEventListener('scroll', onScroll);
     window.addEventListener('resize', onResize);
     return () => { window.removeEventListener('scroll', onScroll); window.removeEventListener('resize', onResize); };
@@ -18,18 +18,14 @@ const Navbar = ({ isLoggedIn, isAdmin, onLogout }) => {
 
   useEffect(() => { setOpen(false); }, [location.pathname]);
 
-  const isActive = (p) => location.pathname === p;
-
+  const active = (p) => location.pathname === p;
   const lnk = (to, label) => (
-    <Link key={to} to={to} style={{ ...s.link, ...(isActive(to) ? s.linkActive : {}) }}>
-      {label}
-    </Link>
+    <Link key={to} to={to} style={{ ...s.link, ...(active(to) ? s.linkActive : {}) }}>{label}</Link>
   );
 
   return (
     <nav style={{ ...s.nav, ...(scrolled ? s.navScrolled : {}) }}>
       <div style={s.inner}>
-        {/* Brand */}
         <Link to="/" style={s.brand}>
           <img src="https://career.webindia123.com/career/institutes/aspupload/Uploads/punjab/21714/logo.jpg" alt="PCTE" style={s.logo} />
           <div>
@@ -38,18 +34,14 @@ const Navbar = ({ isLoggedIn, isAdmin, onLogout }) => {
           </div>
         </Link>
 
-        {/* Desktop links */}
         {!isMobile && (
-          <div style={s.desktopLinks}>
+          <div style={s.links}>
             {lnk('/', 'Home')}
             {lnk('/feed', '📋 Feed')}
             {lnk('/about', 'About')}
+            {lnk('/faq', 'FAQ')}
             {lnk('/contact', 'Contact')}
-            {isLoggedIn && !isAdmin && <>
-              {lnk('/lost', 'Report Lost')}
-              {lnk('/found', 'Report Found')}
-              {lnk('/dashboard', 'Dashboard')}
-            </>}
+            {isLoggedIn && !isAdmin && <>{lnk('/lost', 'Report Lost')}{lnk('/found', 'Report Found')}{lnk('/dashboard', 'Dashboard')}</>}
             {isAdmin && lnk('/admin', '🛡 Admin')}
             <div style={s.divider} />
             {!isLoggedIn
@@ -59,7 +51,6 @@ const Navbar = ({ isLoggedIn, isAdmin, onLogout }) => {
           </div>
         )}
 
-        {/* Hamburger */}
         {isMobile && (
           <button style={s.burger} onClick={() => setOpen(!open)}>
             <span style={{ ...s.bar, ...(open ? { transform: 'rotate(45deg) translate(5px,5px)' } : {}) }} />
@@ -69,21 +60,13 @@ const Navbar = ({ isLoggedIn, isAdmin, onLogout }) => {
         )}
       </div>
 
-      {/* Mobile menu */}
       {isMobile && open && (
         <div style={s.mobileMenu}>
-          {[
-            ['/', 'Home'],
-            ['/feed', '📋 Community Feed'],
-            ['/about', 'About'],
-            ['/contact', 'Contact'],
-            ['/feedback', 'Feedback'],
+          {[['/', 'Home'], ['/feed', '📋 Community Feed'], ['/about', 'About'], ['/faq', 'FAQ'], ['/contact', 'Contact'], ['/feedback', 'Feedback'], ['/support', 'Support'],
             ...(isLoggedIn && !isAdmin ? [['/lost', 'Report Lost'], ['/found', 'Report Found'], ['/dashboard', 'My Dashboard']] : []),
             ...(isAdmin ? [['/admin', '🛡 Admin Panel']] : []),
           ].map(([to, label]) => (
-            <Link key={to} to={to} style={{ ...s.mobileLink, ...(isActive(to) ? s.mobileLinkActive : {}) }}>
-              {label}
-            </Link>
+            <Link key={to} to={to} style={{ ...s.mobileLink, ...(active(to) ? s.mobileLinkActive : {}) }}>{label}</Link>
           ))}
           <div style={s.mobileDivider} />
           {!isLoggedIn
@@ -97,14 +80,14 @@ const Navbar = ({ isLoggedIn, isAdmin, onLogout }) => {
 };
 
 const s = {
-  nav: { position: 'sticky', top: 0, zIndex: 1000, background: 'rgba(10,10,15,0.85)', backdropFilter: 'blur(20px)', borderBottom: '1px solid rgba(255,255,255,0.06)', transition: 'background 0.3s' },
+  nav: { position: 'sticky', top: 0, zIndex: 1000, background: 'rgba(10,10,15,0.85)', backdropFilter: 'blur(20px)', borderBottom: '1px solid rgba(255,255,255,0.06)', transition: 'background 0.3s', fontFamily: 'Inter, sans-serif' },
   navScrolled: { background: 'rgba(10,10,15,0.97)', borderBottom: '1px solid rgba(100,255,218,0.12)' },
   inner: { maxWidth: '1200px', margin: '0 auto', padding: '0 20px', height: '62px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '16px' },
   brand: { display: 'flex', alignItems: 'center', gap: '10px', textDecoration: 'none', flexShrink: 0 },
   logo: { width: '36px', height: '36px', borderRadius: '50%', border: '2px solid rgba(100,255,218,0.3)', objectFit: 'cover' },
   brandName: { fontSize: '15px', fontWeight: 700, color: '#64ffda', lineHeight: 1.2 },
   brandSub: { fontSize: '10px', color: '#555', lineHeight: 1 },
-  desktopLinks: { display: 'flex', alignItems: 'center', gap: '2px', flexWrap: 'nowrap' },
+  links: { display: 'flex', alignItems: 'center', gap: '2px', flexWrap: 'nowrap' },
   link: { padding: '6px 10px', borderRadius: '8px', fontSize: '13px', fontWeight: 500, color: '#888', textDecoration: 'none', transition: 'all 0.2s', whiteSpace: 'nowrap' },
   linkActive: { background: 'rgba(100,255,218,0.1)', color: '#64ffda' },
   divider: { width: '1px', height: '20px', background: 'rgba(255,255,255,0.1)', margin: '0 6px' },

@@ -26,20 +26,14 @@ const PORT = process.env.PORT || 5001;
 
 const allowedOrigins = process.env.ALLOWED_ORIGINS
   ? process.env.ALLOWED_ORIGINS.split(',').map(o => o.trim())
-  : [
-    process.env.FRONTEND_URL || 'http://localhost:5173',
-    'http://localhost:5173',
-    'http://localhost:5174',
-    'http://127.0.0.1:5173',
-    'http://127.0.0.1:5174',
-  ];
+  : ['*']; // dev fallback — allow all
 
 // Socket.IO setup
 export const io = new Server(httpServer, {
   cors: {
-    origin: allowedOrigins,
+    origin: allowedOrigins.includes('*') ? '*' : allowedOrigins,
     methods: ['GET', 'POST'],
-    credentials: true
+    credentials: !allowedOrigins.includes('*'),
   }
 });
 
@@ -75,8 +69,8 @@ io.on('connection', (socket) => {
 // Security middleware
 app.use(helmet());
 app.use(cors({
-  origin: allowedOrigins,
-  credentials: true
+  origin: allowedOrigins.includes('*') ? '*' : allowedOrigins,
+  credentials: !allowedOrigins.includes('*'),
 }));
 
 // Rate limiting
