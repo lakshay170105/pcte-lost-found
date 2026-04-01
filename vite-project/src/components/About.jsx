@@ -1,4 +1,11 @@
-const About = () => (
+import useSEO from '../useSEO.js';
+
+const About = () => {
+  useSEO(
+    'About — PCTE Lost & Found Portal by L-SHAY',
+    'Learn about the PCTE Lost & Found Portal — built by L-SHAY (BCA, PCTE Ludhiana). Real-time item recovery with secure verification and private chat.'
+  );
+  return (
   <div style={s.page}>
     <div style={s.container}>
       <div style={s.hero}>
@@ -62,6 +69,7 @@ const About = () => (
     </div>
   </div>
 );
+};
 
 const s = {
   page: { background: '#0a0a0f', minHeight: '100vh', padding: '40px 20px', fontFamily: 'Inter, sans-serif', color: '#e8e8f0' },

@@ -1,3 +1,5 @@
+import useSEO from '../useSEO.js';
+
 const Section = ({ title, children }) => (
   <div style={{ marginBottom: '32px' }}>
     <h2 style={{ fontSize: '18px', fontWeight: 700, color: '#64ffda', marginBottom: '12px' }}>{title}</h2>
@@ -5,7 +7,9 @@ const Section = ({ title, children }) => (
   </div>
 );
 
-const Terms = () => (
+const Terms = () => {
+  useSEO('Terms & Conditions | PCTE Lost & Found', 'Terms and conditions for using the PCTE Lost & Found Portal. Read about user responsibilities, verification system, and liability.');
+  return (
   <div style={s.page}>
     <div style={s.container}>
       <div style={s.hero}>
@@ -49,7 +53,8 @@ const Terms = () => (
       </div>
     </div>
   </div>
-);
+  );
+};
 
 const s = {
   page: { background: '#0a0a0f', minHeight: '100vh', padding: '40px 20px', fontFamily: 'Inter, sans-serif', color: '#e8e8f0' },

@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import useSEO from '../useSEO.js';
 
 const faqs = [
   { q: 'How do I report a lost item?', a: 'Login to your account, click "Report Lost" in the navbar, fill in the item details including name, description, location, and date. Submit the form and we\'ll notify you if a match is found.' },
@@ -15,6 +16,10 @@ const faqs = [
 
 const FAQ = () => {
   const [open, setOpen] = useState(null);
+  useSEO(
+    'FAQ — Frequently Asked Questions | PCTE Lost & Found',
+    'Answers to common questions about PCTE Lost & Found Portal — how to report items, claim process, verification system, privacy, and multi-device sync.'
+  );
   return (
     <div style={s.page}>
       <div style={s.container}>

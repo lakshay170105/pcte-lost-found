@@ -1,8 +1,13 @@
 import { useState } from 'react';
 import toast from 'react-hot-toast';
 import API_URL from '../config.js';
+import useSEO from '../useSEO.js';
 
 const Contact = () => {
+  useSEO(
+    'Contact Us | PCTE Lost & Found Portal',
+    'Contact the PCTE Lost & Found team. Reach out for help, report issues, or get support. Email: developbylshay@gmail.com'
+  );
   const [form, setForm] = useState({ name: '', email: '', subject: '', message: '' });
   const [errors, setErrors] = useState({});
   const [loading, setLoading] = useState(false);

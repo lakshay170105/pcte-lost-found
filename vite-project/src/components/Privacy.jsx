@@ -1,3 +1,5 @@
+import useSEO from '../useSEO.js';
+
 const Section = ({ title, children }) => (
   <div style={{ marginBottom: '32px' }}>
     <h2 style={{ fontSize: '18px', fontWeight: 700, color: '#64ffda', marginBottom: '12px' }}>{title}</h2>
@@ -5,7 +7,9 @@ const Section = ({ title, children }) => (
   </div>
 );
 
-const Privacy = () => (
+const Privacy = () => {
+  useSEO('Privacy Policy | PCTE Lost & Found', 'Privacy policy for PCTE Lost & Found Portal. Learn how we collect, use, and protect your data. Contact info only shared after verified ownership.');
+  return (
   <div style={s.page}>
     <div style={s.container}>
       <div style={s.hero}>
@@ -54,7 +58,8 @@ const Privacy = () => (
       </div>
     </div>
   </div>
-);
+  );
+};
 
 const s = {
   page: { background: '#0a0a0f', minHeight: '100vh', padding: '40px 20px', fontFamily: 'Inter, sans-serif', color: '#e8e8f0' },

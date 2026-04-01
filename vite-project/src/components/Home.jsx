@@ -2,8 +2,13 @@ import { useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import socket from '../socket.js';
 import API_URL from '../config.js';
+import useSEO from '../useSEO.js';
 
 const Home = ({ isLoggedIn }) => {
+  useSEO(
+    'Home — Report Lost & Found Items at PCTE Ludhiana',
+    'PCTE Lost & Found Portal — Report lost items, find what was found, verify ownership and chat securely. Real-time sync across all devices. PCTE Group of Institutes, Ludhiana.'
+  );
   const navigate = useNavigate();
   const [stats, setStats] = useState({ lost: 0, found: 0, users: 0 });
   const [live, setLive] = useState(false);

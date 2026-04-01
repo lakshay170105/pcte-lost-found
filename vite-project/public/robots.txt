@@ -1,0 +1,16 @@
+User-agent: *
+Allow: /
+Allow: /feed
+Allow: /about
+Allow: /faq
+Allow: /contact
+Allow: /feedback
+Allow: /support
+Allow: /terms
+Allow: /privacy
+
+Disallow: /admin
+Disallow: /dashboard
+Disallow: /login
+
+Sitemap: https://pcte-lost-found.vercel.app/sitemap.xml
