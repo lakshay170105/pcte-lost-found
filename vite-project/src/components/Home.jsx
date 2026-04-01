@@ -119,7 +119,18 @@ const Home = ({ isLoggedIn }) => {
         </div>
       )}
 
-      <style>{`@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}`}</style>
+      <style>{`
+        @keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+        @keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+        @media(max-width:768px){
+          .hero-btns button{width:100%;justify-content:center;}
+          .stats-grid{grid-template-columns:1fr!important;}
+          .steps-grid{grid-template-columns:1fr!important;}
+          .recent-grid{grid-template-columns:1fr!important;}
+          .hero-sub{font-size:15px!important;}
+          .section-title{font-size:22px!important;}
+        }
+      `}</style>
     </div>
   );
 };
