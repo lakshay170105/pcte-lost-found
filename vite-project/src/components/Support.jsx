@@ -41,6 +41,7 @@ const Support = () => {
           <div style={s.cards}>
             {[
               { icon: '📧', title: 'Email Support', val: 'developbylshay@gmail.com', link: 'mailto:developbylshay@gmail.com' },
+              { icon: '📞', title: 'Phone / WhatsApp', val: '+91 8264105684', link: 'tel:+918264105684' },
               { icon: '📸', title: 'Instagram', val: '@develop_by_lshay', link: 'https://instagram.com/develop_by_lshay' },
               { icon: '❓', title: 'FAQ', val: 'Browse common questions', link: '/faq' },
             ].map(c => (

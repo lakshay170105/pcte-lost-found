@@ -48,7 +48,7 @@ const Terms = () => {
           We may update these terms at any time. Continued use of the platform after changes constitutes acceptance of the new terms.
         </Section>
         <Section title="9. Contact">
-          For questions about these terms, contact us at <a href="mailto:developbylshay@gmail.com" style={{ color: '#64ffda' }}>developbylshay@gmail.com</a>
+          For questions about these terms, contact us at <a href="mailto:developbylshay@gmail.com" style={{ color: '#64ffda' }}>developbylshay@gmail.com</a> or call <a href="tel:+918264105684" style={{ color: '#64ffda' }}>+91 8264105684</a>
         </Section>
       </div>
     </div>

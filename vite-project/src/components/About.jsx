@@ -62,6 +62,9 @@ const About = () => {
             <a href="mailto:developbylshay@gmail.com" style={s.devLink}>
               📧 developbylshay@gmail.com
             </a>
+            <a href="tel:+918264105684" style={s.devLink}>
+              📞 +91 8264105684
+            </a>
           </div>
         </div>
         <div style={s.devYear}>2026</div>

@@ -65,8 +65,8 @@ const Contact = () => {
           {/* Info */}
           <div style={s.info}>
             {[
-              { icon: '📧', label: 'Email', value: 'lostandfound@pcte.edu' },
-              { icon: '📞', label: 'Phone', value: '+91-1234567890' },
+              { icon: '📧', label: 'Email', value: 'developbylshay@gmail.com' },
+              { icon: '📞', label: 'Phone', value: '+91 8264105684' },
               { icon: '📍', label: 'Address', value: 'PCTE Group of Institutes, Ludhiana, Punjab' },
               { icon: '🕐', label: 'Hours', value: 'Mon–Sat, 9 AM – 5 PM' },
             ].map(item => (

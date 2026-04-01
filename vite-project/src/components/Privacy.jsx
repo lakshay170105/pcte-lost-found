@@ -53,7 +53,7 @@ const Privacy = () => {
           You can delete your account and all associated data by contacting us. You can also delete your own item reports from your dashboard.
         </Section>
         <Section title="9. Contact">
-          For privacy concerns, contact: <a href="mailto:developbylshay@gmail.com" style={{ color: '#64ffda' }}>developbylshay@gmail.com</a>
+          For privacy concerns, contact: <a href="mailto:developbylshay@gmail.com" style={{ color: '#64ffda' }}>developbylshay@gmail.com</a> · <a href="tel:+918264105684" style={{ color: '#64ffda' }}>+91 8264105684</a>
         </Section>
       </div>
     </div>

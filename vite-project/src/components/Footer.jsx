@@ -31,6 +31,7 @@ const Footer = () => (
           <div style={s.colTitle}>Developer</div>
           <a href="https://instagram.com/develop_by_lshay" target="_blank" rel="noreferrer" style={{ ...s.link, color: '#e1306c' }}>📸 @develop_by_lshay</a>
           <a href="mailto:developbylshay@gmail.com" style={s.link}>📧 developbylshay@gmail.com</a>
+          <a href="tel:+918264105684" style={s.link}>📞 +91 8264105684</a>
           <div style={s.link}>📍 PCTE Campus, Ludhiana</div>
         </div>
       </div>
