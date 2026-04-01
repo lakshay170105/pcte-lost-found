@@ -26,14 +26,23 @@ const PORT = process.env.PORT || 5001;
 
 const allowedOrigins = process.env.ALLOWED_ORIGINS
   ? process.env.ALLOWED_ORIGINS.split(',').map(o => o.trim())
-  : ['*']; // dev fallback — allow all
+  : ['*'];
+
+// Accept any vercel.app subdomain for this project
+const isAllowed = (origin) => {
+  if (!origin) return true;
+  if (allowedOrigins.includes('*')) return true;
+  if (allowedOrigins.includes(origin)) return true;
+  if (origin.endsWith('.vercel.app')) return true;
+  return false;
+};
 
 // Socket.IO setup
 export const io = new Server(httpServer, {
   cors: {
-    origin: allowedOrigins.includes('*') ? '*' : allowedOrigins,
+    origin: (origin, cb) => cb(null, isAllowed(origin)),
     methods: ['GET', 'POST'],
-    credentials: !allowedOrigins.includes('*'),
+    credentials: true,
   }
 });
 
@@ -69,8 +78,8 @@ io.on('connection', (socket) => {
 // Security middleware
 app.use(helmet());
 app.use(cors({
-  origin: allowedOrigins.includes('*') ? '*' : allowedOrigins,
-  credentials: !allowedOrigins.includes('*'),
+  origin: (origin, cb) => cb(null, isAllowed(origin)),
+  credentials: true,
 }));
 
 // Rate limiting
@@ -109,6 +118,17 @@ app.get('/api/health', (req, res) => {
     message: 'PCTE Lost & Found API is running',
     timestamp: new Date().toISOString(),
     connectedClients: io.engine.clientsCount
+  });
+});
+
+// Root route — show API info
+app.get('/', (_req, res) => {
+  res.json({
+    name: 'PCTE Lost & Found API',
+    version: '1.0.0',
+    status: 'running',
+    endpoints: '/api/health | /api/auth | /api/lost-items | /api/found-items | /api/claims | /api/admin',
+    frontend: process.env.ALLOWED_ORIGINS || 'https://pcte-lost-found.vercel.app',
   });
 });
 
