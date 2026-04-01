@@ -2,77 +2,154 @@ import { Link } from 'react-router-dom';
 
 const Footer = () => (
   <footer style={s.footer}>
-    <div style={s.inner}>
-      <div style={s.brand}>
-        <img src="https://career.webindia123.com/career/institutes/aspupload/Uploads/punjab/21714/logo.jpg" alt="PCTE" style={s.logo} />
-        <div>
-          <div style={s.brandName}>PCTE Lost & Found</div>
-          <div style={s.brandSub}>by L-SHAY · PCTE Group of Institutes, Ludhiana</div>
-        </div>
+    {/* Title bar */}
+    <div style={s.titleBar}>
+      <div style={s.titleLeft}>
+        <img
+          src="https://career.webindia123.com/career/institutes/aspupload/Uploads/punjab/21714/logo.jpg"
+          alt="PCTE"
+          style={s.logo}
+        />
+        <span style={s.titleText}>PCTE Lost &amp; Found — Footer</span>
       </div>
+    </div>
 
+    {/* Body */}
+    <div style={s.body}>
       <div style={s.cols}>
+        {/* Navigate */}
         <div style={s.col}>
           <div style={s.colTitle}>Navigate</div>
-          <Link to="/" style={s.link}>Home</Link>
-          <Link to="/feed" style={s.link}>Community Feed</Link>
-          <Link to="/about" style={s.link}>About</Link>
-          <Link to="/contact" style={s.link}>Contact</Link>
-          <Link to="/feedback" style={s.link}>Feedback</Link>
+          <div style={s.colLinks}>
+            <Link to="/" style={s.link}>Home</Link>
+            <Link to="/feed" style={s.link}>Community Feed</Link>
+            <Link to="/about" style={s.link}>About</Link>
+            <Link to="/contact" style={s.link}>Contact</Link>
+            <Link to="/feedback" style={s.link}>Feedback</Link>
+          </div>
         </div>
+
+        {/* Help */}
         <div style={s.col}>
-          <div style={s.colTitle}>Help</div>
-          <Link to="/faq" style={s.link}>FAQ</Link>
-          <Link to="/support" style={s.link}>Support</Link>
-          <Link to="/terms" style={s.link}>Terms & Conditions</Link>
-          <Link to="/privacy" style={s.link}>Privacy Policy</Link>
+          <div style={s.colTitle}>Help &amp; Legal</div>
+          <div style={s.colLinks}>
+            <Link to="/faq" style={s.link}>FAQ</Link>
+            <Link to="/support" style={s.link}>Support</Link>
+            <Link to="/terms" style={s.link}>Terms &amp; Conditions</Link>
+            <Link to="/privacy" style={s.link}>Privacy Policy</Link>
+          </div>
         </div>
+
+        {/* Developer */}
         <div style={s.col}>
-          <div style={s.colTitle}>Developer</div>
-          <a href="https://instagram.com/develop_by_lshay" target="_blank" rel="noreferrer" style={{ ...s.link, color: '#e1306c' }}>📸 @develop_by_lshay</a>
-          <a href="mailto:developbylshay@gmail.com" style={s.link}>📧 developbylshay@gmail.com</a>
-          <div style={s.link}>📍 PCTE Campus, Ludhiana</div>
+          <div style={s.colTitle}>Developer Contact</div>
+          <div style={s.colLinks}>
+            <a href="https://instagram.com/develop_by_lshay" target="_blank" rel="noreferrer" style={{ ...s.link, color: '#800080' }}>📸 @develop_by_lshay</a>
+            <a href="mailto:developbylshay@gmail.com" style={s.link}>📧 developbylshay@gmail.com</a>
+            <span style={s.link}>📍 PCTE Campus, Ludhiana</span>
+          </div>
         </div>
       </div>
     </div>
 
-    <div style={s.bottom}>
-      <span>© 2026 PCTE Lost & Found Portal — by L-SHAY. All rights reserved.</span>
-      <span style={s.bottomLinks}>
+    {/* Status bar */}
+    <div style={s.statusBar}>
+      <span style={s.statusItem}>© 2026 PCTE Lost &amp; Found Portal — by L-SHAY. All rights reserved.</span>
+      <span style={{ ...s.statusItem, display: 'flex', gap: '6px', alignItems: 'center' }}>
         <Link to="/terms" style={s.bottomLink}>Terms</Link>
-        <span style={s.dot}>·</span>
+        <span>·</span>
         <Link to="/privacy" style={s.bottomLink}>Privacy</Link>
-        <span style={s.dot}>·</span>
-        <a href="https://instagram.com/develop_by_lshay" target="_blank" rel="noreferrer" style={s.devLink}>L-SHAY</a>
+        <span>·</span>
+        <a href="https://instagram.com/develop_by_lshay" target="_blank" rel="noreferrer" style={{ ...s.bottomLink, color: '#000080', fontWeight: 700 }}>L-SHAY</a>
       </span>
     </div>
-
-    <style>{`
-      @media (max-width: 768px) {
-        .footer-inner { flex-direction: column !important; gap: 24px !important; }
-        .footer-cols { flex-direction: column !important; gap: 20px !important; }
-        .footer-bottom { flex-direction: column !important; gap: 8px !important; text-align: center !important; }
-      }
-    `}</style>
   </footer>
 );
 
+const font = '"Tahoma", "MS Sans Serif", Arial, sans-serif';
+
 const s = {
-  footer: { background: 'rgba(0,0,0,0.6)', borderTop: '1px solid rgba(255,255,255,0.06)', padding: '48px 20px 20px', fontFamily: 'Inter,sans-serif', color: '#e8e8f0', marginTop: 'auto' },
-  inner: { maxWidth: '1100px', margin: '0 auto', display: 'flex', justifyContent: 'space-between', gap: '40px', flexWrap: 'wrap', marginBottom: '32px' },
-  brand: { display: 'flex', alignItems: 'flex-start', gap: '12px', maxWidth: '260px' },
-  logo: { width: '44px', height: '44px', borderRadius: '50%', border: '2px solid rgba(100,255,218,0.3)', objectFit: 'cover', flexShrink: 0 },
-  brandName: { fontWeight: 700, fontSize: '16px', color: '#64ffda', marginBottom: '4px' },
-  brandSub: { fontSize: '11px', color: '#444', lineHeight: 1.5 },
-  cols: { display: 'flex', gap: '48px', flexWrap: 'wrap' },
-  col: { display: 'flex', flexDirection: 'column', gap: '8px', minWidth: '120px' },
-  colTitle: { fontSize: '11px', fontWeight: 700, color: '#64ffda', textTransform: 'uppercase', letterSpacing: '0.5px', marginBottom: '4px' },
-  link: { fontSize: '13px', color: '#555', textDecoration: 'none', transition: 'color .2s', cursor: 'pointer' },
-  bottom: { maxWidth: '1100px', margin: '0 auto', paddingTop: '20px', borderTop: '1px solid rgba(255,255,255,0.05)', display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap', gap: '8px', fontSize: '12px', color: '#333' },
-  bottomLinks: { display: 'flex', alignItems: 'center', gap: '6px' },
-  bottomLink: { color: '#444', textDecoration: 'none' },
-  dot: { color: '#333' },
-  devLink: { color: '#64ffda', textDecoration: 'none', fontWeight: 600 },
+  footer: {
+    background: '#d4d0c8',
+    border: '2px solid',
+    borderColor: '#ffffff #808080 #808080 #ffffff',
+    boxShadow: '0 -2px 6px rgba(0,0,0,0.3)',
+    marginTop: '10px',
+    fontFamily: font,
+  },
+  titleBar: {
+    background: 'linear-gradient(to right, #000080, #1084d0)',
+    padding: '3px 8px',
+    display: 'flex',
+    alignItems: 'center',
+    userSelect: 'none',
+  },
+  titleLeft: {
+    display: 'flex',
+    alignItems: 'center',
+    gap: '6px',
+    color: '#fff',
+    fontSize: '12px',
+    fontWeight: 700,
+  },
+  logo: {
+    width: '18px',
+    height: '18px',
+    borderRadius: '50%',
+    border: '1px solid rgba(255,255,255,0.5)',
+    objectFit: 'cover',
+    flexShrink: 0,
+  },
+  titleText: { color: '#fff', fontWeight: 700, fontSize: '12px' },
+  body: {
+    background: '#fff',
+    padding: '16px 20px',
+    boxShadow: 'inset 1px 1px 3px rgba(0,0,0,0.1)',
+  },
+  cols: {
+    display: 'flex',
+    gap: '40px',
+    flexWrap: 'wrap',
+    maxWidth: '900px',
+    margin: '0 auto',
+  },
+  col: { flex: '1 1 160px', display: 'flex', flexDirection: 'column', gap: '6px' },
+  colTitle: {
+    fontSize: '12px',
+    fontWeight: 700,
+    color: '#000080',
+    textTransform: 'uppercase',
+    letterSpacing: '0.3px',
+    borderBottom: '1px solid #a0a0a0',
+    paddingBottom: '4px',
+    marginBottom: '4px',
+    fontFamily: font,
+  },
+  colLinks: { display: 'flex', flexDirection: 'column', gap: '3px' },
+  link: {
+    fontSize: '12px',
+    color: '#000080',
+    textDecoration: 'underline',
+    cursor: 'pointer',
+    fontFamily: font,
+  },
+  statusBar: {
+    background: '#d4d0c8',
+    borderTop: '2px solid',
+    borderColor: '#808080',
+    boxShadow: 'inset 0 1px 0 #fff',
+    padding: '4px 12px',
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    flexWrap: 'wrap',
+    gap: '6px',
+    fontSize: '11px',
+    fontFamily: font,
+    color: '#333',
+  },
+  statusItem: { fontSize: '11px', fontFamily: font, color: '#333' },
+  bottomLink: { color: '#000080', textDecoration: 'underline', fontSize: '11px', fontFamily: font },
 };
 
 export default Footer;

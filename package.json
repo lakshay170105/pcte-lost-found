@@ -7,5 +7,9 @@
     "build": "cd backend && npm install",
     "dev": "cd vite-project && npm run dev"
   },
-  "author": "L-SHAY"
+  "author": "L-SHAY",
+  "dependencies": {
+    "react": "^19.2.4",
+    "react-router-dom": "^7.13.2"
+  }
 }
