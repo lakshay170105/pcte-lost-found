@@ -1,25 +1,12 @@
 {
-  "name": "react",
+  "name": "pcte-lost-found-root",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "PCTE Lost & Found Portal - Root workspace",
+  "private": true,
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "vite",
-    "build": "vite build",
-    "start": "vite preview"
+    "dev:backend": "cd backend && npm run dev",
+    "dev:frontend": "cd vite-project && npm run dev",
+    "start": "echo 'Run: cd backend && npm start'"
   },
-  "author": "",
-  "license": "ISC",
-  "devDependencies": {
-    "@vitejs/plugin-react": "^4.4.1",
-    "vite": "^7.1.9"
-  },
-  "dependencies": {
-    "mongodb": "^7.0.0",
-    "react": "^19.2.0",
-    "react-dom": "^19.2.0",
-    "react-router-dom": "^7.9.4"
-  },
-  "keywords": []
+  "author": "L-shay"
 }
