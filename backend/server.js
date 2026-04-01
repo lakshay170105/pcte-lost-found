@@ -137,6 +137,13 @@ const server = httpServer.listen(PORT, () => {
   console.log(`🔌 Socket.IO enabled for real-time sync`);
 });
 
+server.on('error', (err) => {
+  if (err.code === 'EADDRINUSE') {
+    console.error(`❌ Port ${PORT} is already in use. Kill the process and retry.`);
+    process.exit(1);
+  }
+});
+
 // Graceful shutdown — prevents EADDRINUSE on nodemon restart
 process.on('SIGTERM', () => { server.close(() => mongoose.disconnect()); });
 process.on('SIGINT', () => { server.close(() => { mongoose.disconnect(); process.exit(0); }); });
