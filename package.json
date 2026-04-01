@@ -1,12 +1,11 @@
 {
   "name": "pcte-lost-found-root",
   "version": "1.0.0",
-  "description": "PCTE Lost & Found Portal - Root workspace",
   "private": true,
   "scripts": {
-    "dev:backend": "cd backend && npm run dev",
-    "dev:frontend": "cd vite-project && npm run dev",
-    "start": "echo 'Run: cd backend && npm start'"
+    "start": "cd backend && node server.js",
+    "build": "cd backend && npm install",
+    "dev": "cd vite-project && npm run dev"
   },
-  "author": "L-shay"
+  "author": "L-SHAY"
 }
