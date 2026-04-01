@@ -3,73 +3,95 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 
 const Navbar = ({ isLoggedIn, isAdmin, onLogout }) => {
   const [open, setOpen] = useState(false);
-  const [scrolled, setScrolled] = useState(false);
   const [w, setW] = useState(window.innerWidth);
   const location = useLocation();
   const navigate = useNavigate();
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 8);
     const onResize = () => { setW(window.innerWidth); if (window.innerWidth > 900) setOpen(false); };
-    window.addEventListener('scroll', onScroll);
     window.addEventListener('resize', onResize);
-    return () => { window.removeEventListener('scroll', onScroll); window.removeEventListener('resize', onResize); };
+    return () => window.removeEventListener('resize', onResize);
   }, []);
 
   useEffect(() => { setOpen(false); }, [location.pathname]);
 
   const isMobile = w <= 900;
   const active = (p) => location.pathname === p;
+
   const lnk = (to, label) => (
-    <Link key={to} to={to} style={{ ...s.link, ...(active(to) ? s.linkActive : {}) }}>{label}</Link>
+    <Link
+      key={to}
+      to={to}
+      style={{
+        ...s.link,
+        ...(active(to) ? s.linkActive : {}),
+      }}
+    >
+      {label}
+    </Link>
   );
 
   return (
-    <nav style={{ ...s.nav, ...(scrolled ? s.navScrolled : {}) }}>
-      <div style={s.inner}>
-        {/* Brand */}
-        <Link to="/" style={s.brand}>
-          <img src="https://career.webindia123.com/career/institutes/aspupload/Uploads/punjab/21714/logo.jpg" alt="PCTE Logo" style={s.logo} />
-          <div>
-            <div style={s.brandName}>PCTE Lost & Found</div>
-            <div style={s.brandSub}>by L-SHAY</div>
-          </div>
-        </Link>
+    <div style={s.shell}>
+      {/* ── TITLE BAR ── */}
+      <div style={s.titleBar}>
+        <div style={s.titleLeft}>
+          <img
+            src="https://career.webindia123.com/career/institutes/aspupload/Uploads/punjab/21714/logo.jpg"
+            alt="PCTE Logo"
+            style={s.logo}
+          />
+          <span style={s.titleText}>PCTE Lost &amp; Found Portal</span>
+          <span style={s.titleSub}> — by L-SHAY</span>
+        </div>
+        <div style={s.titleBtns}>
+          <button style={s.titleBtn}>_</button>
+          <button style={s.titleBtn}>□</button>
+          <button style={{ ...s.titleBtn, ...s.titleBtnClose }}>✕</button>
+        </div>
+      </div>
 
-        {/* Desktop */}
-        {!isMobile && (
-          <div style={s.links}>
+      {/* ── MENU BAR ── */}
+      <div style={s.menuBar}>
+        {isMobile ? (
+          <button
+            style={s.hamburgerBtn}
+            onClick={() => setOpen(!open)}
+            aria-label={open ? 'Close menu' : 'Open menu'}
+          >
+            ☰ Menu
+          </button>
+        ) : (
+          <div style={s.menuRow}>
             {lnk('/', 'Home')}
             {lnk('/feed', '📋 Feed')}
             {lnk('/about', 'About')}
             {lnk('/faq', 'FAQ')}
             {lnk('/contact', 'Contact')}
-            {isLoggedIn && !isAdmin && <>{lnk('/lost', 'Report Lost')}{lnk('/found', 'Report Found')}{lnk('/dashboard', 'Dashboard')}</>}
+            {isLoggedIn && !isAdmin && (
+              <>
+                {lnk('/lost', '🔍 Report Lost')}
+                {lnk('/found', '📦 Report Found')}
+                {lnk('/dashboard', '📊 Dashboard')}
+              </>
+            )}
             {isAdmin && lnk('/admin', '🛡 Admin')}
-            <div style={s.divider} />
-            {!isLoggedIn
-              ? <Link to="/login" style={s.btnLogin}>Sign In</Link>
-              : <button onClick={() => { onLogout(); navigate('/'); }} style={s.btnLogout}>Sign Out</button>
-            }
+            <div style={s.menuSep} />
+            {!isLoggedIn ? (
+              <Link to="/login" style={s.btnSignIn}>Sign In</Link>
+            ) : (
+              <button
+                onClick={() => { onLogout(); navigate('/'); }}
+                style={s.btnSignOut}
+              >
+                Sign Out
+              </button>
+            )}
           </div>
-        )}
-
-        {/* Hamburger */}
-        {isMobile && (
-          <button
-            style={s.burger}
-            onClick={() => setOpen(!open)}
-            aria-label={open ? 'Close menu' : 'Open menu'}
-            aria-expanded={open}
-          >
-            <span style={{ ...s.bar, ...(open ? { transform: 'rotate(45deg) translate(5px,5px)' } : {}) }} />
-            <span style={{ ...s.bar, ...(open ? { opacity: 0, transform: 'scaleX(0)' } : {}) }} />
-            <span style={{ ...s.bar, ...(open ? { transform: 'rotate(-45deg) translate(5px,-5px)' } : {}) }} />
-          </button>
         )}
       </div>
 
-      {/* Mobile Menu */}
+      {/* ── MOBILE DROPDOWN ── */}
       {isMobile && open && (
         <div style={s.mobileMenu}>
           {[
@@ -80,46 +102,228 @@ const Navbar = ({ isLoggedIn, isAdmin, onLogout }) => {
             ['/contact', 'Contact'],
             ['/feedback', 'Feedback'],
             ['/support', 'Support'],
-            ...(isLoggedIn && !isAdmin ? [['/lost', '🔍 Report Lost'], ['/found', '📦 Report Found'], ['/dashboard', '📊 My Dashboard']] : []),
+            ...(isLoggedIn && !isAdmin
+              ? [['/lost', '🔍 Report Lost'], ['/found', '📦 Report Found'], ['/dashboard', '📊 Dashboard']]
+              : []),
             ...(isAdmin ? [['/admin', '🛡 Admin Panel']] : []),
           ].map(([to, label]) => (
-            <Link key={to} to={to} style={{ ...s.mobileLink, ...(active(to) ? s.mobileLinkActive : {}) }}>
+            <Link
+              key={to}
+              to={to}
+              style={{ ...s.mobileLink, ...(active(to) ? s.mobileLinkActive : {}) }}
+            >
               {label}
             </Link>
           ))}
-          <div style={s.mobileDivider} />
-          {!isLoggedIn
-            ? <Link to="/login" style={s.mobileBtnLogin}>Sign In</Link>
-            : <button onClick={() => { onLogout(); navigate('/'); setOpen(false); }} style={s.mobileBtnLogout}>Sign Out</button>
-          }
+          <div style={s.mobileSep} />
+          {!isLoggedIn ? (
+            <Link to="/login" style={s.mobileBtnSignIn}>Sign In</Link>
+          ) : (
+            <button onClick={() => { onLogout(); navigate('/'); setOpen(false); }} style={s.mobileBtnSignOut}>
+              Sign Out
+            </button>
+          )}
         </div>
       )}
-    </nav>
+    </div>
   );
 };
 
+const font = '"Tahoma", "MS Sans Serif", Arial, sans-serif';
+
 const s = {
-  nav: { position: 'sticky', top: 0, zIndex: 1000, background: 'rgba(10,10,15,0.85)', backdropFilter: 'blur(20px)', WebkitBackdropFilter: 'blur(20px)', borderBottom: '1px solid rgba(255,255,255,0.06)', transition: 'background .3s,border-color .3s', fontFamily: 'Inter,sans-serif' },
-  navScrolled: { background: 'rgba(10,10,15,0.97)', borderBottom: '1px solid rgba(100,255,218,0.12)' },
-  inner: { maxWidth: '1200px', margin: '0 auto', padding: '0 20px', height: '62px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '12px' },
-  brand: { display: 'flex', alignItems: 'center', gap: '10px', textDecoration: 'none', flexShrink: 0 },
-  logo: { width: '36px', height: '36px', borderRadius: '50%', border: '2px solid rgba(100,255,218,0.3)', objectFit: 'cover' },
-  brandName: { fontSize: '15px', fontWeight: 700, color: '#64ffda', lineHeight: 1.2 },
-  brandSub: { fontSize: '10px', color: 'rgba(100,255,218,0.5)', lineHeight: 1, fontWeight: 500 },
-  links: { display: 'flex', alignItems: 'center', gap: '2px', flexWrap: 'nowrap', overflow: 'hidden' },
-  link: { padding: '6px 9px', borderRadius: '8px', fontSize: '13px', fontWeight: 500, color: '#888', textDecoration: 'none', transition: 'all .2s', whiteSpace: 'nowrap' },
-  linkActive: { background: 'rgba(100,255,218,0.1)', color: '#64ffda' },
-  divider: { width: '1px', height: '20px', background: 'rgba(255,255,255,0.1)', margin: '0 4px', flexShrink: 0 },
-  btnLogin: { padding: '7px 14px', borderRadius: '8px', background: 'linear-gradient(135deg,#64ffda,#00b4d8)', color: '#0a0a0f', fontWeight: 700, fontSize: '13px', textDecoration: 'none', whiteSpace: 'nowrap', flexShrink: 0 },
-  btnLogout: { padding: '7px 12px', borderRadius: '8px', background: 'rgba(255,77,109,0.12)', border: '1px solid rgba(255,77,109,0.25)', color: '#ff4d6d', fontWeight: 600, fontSize: '13px', cursor: 'pointer', whiteSpace: 'nowrap', flexShrink: 0 },
-  burger: { display: 'flex', flexDirection: 'column', gap: '5px', background: 'none', border: 'none', cursor: 'pointer', padding: '8px', borderRadius: '8px', flexShrink: 0 },
-  bar: { width: '22px', height: '2px', background: '#e8e8f0', borderRadius: '2px', transition: 'all .3s', display: 'block' },
-  mobileMenu: { background: 'rgba(10,10,15,0.98)', borderTop: '1px solid rgba(255,255,255,0.06)', padding: '12px 16px 20px', display: 'flex', flexDirection: 'column', gap: '2px', animation: 'fadeIn .2s ease', maxHeight: '80vh', overflowY: 'auto' },
-  mobileLink: { padding: '12px 14px', borderRadius: '10px', fontSize: '14px', fontWeight: 500, color: '#888', textDecoration: 'none', transition: 'all .15s' },
-  mobileLinkActive: { background: 'rgba(100,255,218,0.08)', color: '#64ffda' },
-  mobileDivider: { height: '1px', background: 'rgba(255,255,255,0.06)', margin: '8px 0' },
-  mobileBtnLogin: { padding: '13px', borderRadius: '10px', background: 'linear-gradient(135deg,#64ffda,#00b4d8)', color: '#0a0a0f', fontWeight: 700, fontSize: '14px', textDecoration: 'none', textAlign: 'center', display: 'block' },
-  mobileBtnLogout: { padding: '13px', borderRadius: '10px', background: 'rgba(255,77,109,0.12)', border: '1px solid rgba(255,77,109,0.25)', color: '#ff4d6d', fontWeight: 600, fontSize: '14px', cursor: 'pointer', width: '100%' },
+  shell: {
+    position: 'sticky',
+    top: 0,
+    zIndex: 1000,
+    fontFamily: font,
+    boxShadow: '0 2px 6px rgba(0,0,0,0.5)',
+  },
+
+  /* Title bar */
+  titleBar: {
+    background: 'linear-gradient(to right, #000080, #1084d0)',
+    padding: '3px 6px',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    userSelect: 'none',
+    cursor: 'default',
+  },
+  titleLeft: {
+    display: 'flex',
+    alignItems: 'center',
+    gap: '6px',
+    color: '#fff',
+    fontSize: '13px',
+    fontWeight: 700,
+    overflow: 'hidden',
+    whiteSpace: 'nowrap',
+  },
+  logo: {
+    width: '20px',
+    height: '20px',
+    borderRadius: '50%',
+    border: '1px solid rgba(255,255,255,0.5)',
+    objectFit: 'cover',
+    flexShrink: 0,
+  },
+  titleText: { color: '#fff', fontWeight: 700, fontSize: '13px' },
+  titleSub: { color: 'rgba(255,255,255,0.65)', fontWeight: 400, fontSize: '12px' },
+  titleBtns: { display: 'flex', gap: '2px', flexShrink: 0 },
+  titleBtn: {
+    width: '18px',
+    height: '16px',
+    fontSize: '9px',
+    fontFamily: font,
+    background: '#d4d0c8',
+    border: 'none',
+    cursor: 'pointer',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    padding: 0,
+    boxShadow: '1px 1px 0 #fff, -1px -1px 0 #808080',
+    color: '#000',
+  },
+  titleBtnClose: { background: '#d4d0c8' },
+
+  /* Menu bar */
+  menuBar: {
+    background: '#d4d0c8',
+    borderBottom: '2px solid',
+    borderColor: '#808080',
+    boxShadow: 'inset 0 -1px 0 #fff',
+    padding: '0 4px',
+  },
+  menuRow: {
+    display: 'flex',
+    alignItems: 'center',
+    flexWrap: 'nowrap',
+    overflow: 'hidden',
+    gap: '0',
+    height: '28px',
+  },
+  link: {
+    padding: '4px 8px',
+    fontSize: '12px',
+    fontFamily: font,
+    color: '#000',
+    textDecoration: 'none',
+    borderRadius: '2px',
+    whiteSpace: 'nowrap',
+    height: '100%',
+    display: 'flex',
+    alignItems: 'center',
+  },
+  linkActive: {
+    background: '#000080',
+    color: '#fff',
+  },
+  menuSep: {
+    flex: 1,
+  },
+  btnSignIn: {
+    padding: '3px 10px',
+    fontSize: '12px',
+    fontFamily: font,
+    background: '#d4d0c8',
+    color: '#000080',
+    fontWeight: 700,
+    textDecoration: 'none',
+    border: 'none',
+    cursor: 'pointer',
+    boxShadow: '1px 1px 0 #fff, -1px -1px 0 #808080, 2px 2px 0 #dfdfdf, -2px -2px 0 #404040',
+    marginLeft: '4px',
+    whiteSpace: 'nowrap',
+    display: 'flex',
+    alignItems: 'center',
+  },
+  btnSignOut: {
+    padding: '3px 10px',
+    fontSize: '12px',
+    fontFamily: font,
+    background: '#d4d0c8',
+    color: '#800000',
+    fontWeight: 700,
+    border: 'none',
+    cursor: 'pointer',
+    boxShadow: '1px 1px 0 #fff, -1px -1px 0 #808080, 2px 2px 0 #dfdfdf, -2px -2px 0 #404040',
+    marginLeft: '4px',
+    whiteSpace: 'nowrap',
+  },
+
+  /* Hamburger */
+  hamburgerBtn: {
+    margin: '3px 4px',
+    padding: '3px 10px',
+    fontSize: '12px',
+    fontFamily: font,
+    background: '#d4d0c8',
+    border: 'none',
+    cursor: 'pointer',
+    boxShadow: '1px 1px 0 #fff, -1px -1px 0 #808080',
+    color: '#000',
+    display: 'block',
+  },
+
+  /* Mobile menu */
+  mobileMenu: {
+    background: '#d4d0c8',
+    borderBottom: '2px solid #808080',
+    display: 'flex',
+    flexDirection: 'column',
+    padding: '4px',
+    gap: '1px',
+    maxHeight: '80vh',
+    overflowY: 'auto',
+  },
+  mobileLink: {
+    padding: '7px 12px',
+    fontSize: '13px',
+    fontFamily: font,
+    color: '#000',
+    textDecoration: 'none',
+  },
+  mobileLinkActive: {
+    background: '#000080',
+    color: '#fff',
+  },
+  mobileSep: {
+    height: '1px',
+    background: '#808080',
+    margin: '4px 0',
+    boxShadow: '0 1px 0 #fff',
+  },
+  mobileBtnSignIn: {
+    padding: '7px 12px',
+    fontSize: '13px',
+    fontFamily: font,
+    color: '#000080',
+    fontWeight: 700,
+    textDecoration: 'none',
+    textAlign: 'center',
+    display: 'block',
+    background: '#d4d0c8',
+    border: 'none',
+    boxShadow: '1px 1px 0 #fff, -1px -1px 0 #808080',
+    margin: '2px 4px',
+    cursor: 'pointer',
+  },
+  mobileBtnSignOut: {
+    padding: '7px 12px',
+    fontSize: '13px',
+    fontFamily: font,
+    color: '#800000',
+    fontWeight: 700,
+    background: '#d4d0c8',
+    border: 'none',
+    boxShadow: '1px 1px 0 #fff, -1px -1px 0 #808080',
+    margin: '2px 4px',
+    cursor: 'pointer',
+    width: 'calc(100% - 8px)',
+    textAlign: 'left',
+  },
 };
 
 export default Navbar;
