@@ -44,7 +44,8 @@ const Footer = () => (
         <span style={s.dot}>·</span>
         <Link to="/privacy" style={s.bottomLink}>Privacy</Link>
         <span style={s.dot}>·</span>
-        Built by <a href="https://instagram.com/develop_by_lshay" target="_blank" rel="noreferrer" style={s.devLink}>L-shay</a>
+        <span>PCTE Lost & Found by </span>
+        <a href="https://instagram.com/develop_by_lshay" target="_blank" rel="noreferrer" style={s.devLink}>L-SHAY</a>
       </span>
     </div>
   </footer>

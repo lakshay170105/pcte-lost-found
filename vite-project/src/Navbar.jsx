@@ -30,7 +30,7 @@ const Navbar = ({ isLoggedIn, isAdmin, onLogout }) => {
           <img src="https://career.webindia123.com/career/institutes/aspupload/Uploads/punjab/21714/logo.jpg" alt="PCTE" style={s.logo} />
           <div>
             <div style={s.brandName}>PCTE Lost & Found</div>
-            <div style={s.brandSub}>Portal</div>
+            <div style={s.brandSub}>by L-SHAY</div>
           </div>
         </Link>
 
@@ -86,7 +86,7 @@ const s = {
   brand: { display: 'flex', alignItems: 'center', gap: '10px', textDecoration: 'none', flexShrink: 0 },
   logo: { width: '36px', height: '36px', borderRadius: '50%', border: '2px solid rgba(100,255,218,0.3)', objectFit: 'cover' },
   brandName: { fontSize: '15px', fontWeight: 700, color: '#64ffda', lineHeight: 1.2 },
-  brandSub: { fontSize: '10px', color: '#555', lineHeight: 1 },
+  brandSub: { fontSize: '10px', color: '#64ffda88', lineHeight: 1, fontWeight: 500, letterSpacing: '0.3px' },
   links: { display: 'flex', alignItems: 'center', gap: '2px', flexWrap: 'nowrap' },
   link: { padding: '6px 10px', borderRadius: '8px', fontSize: '13px', fontWeight: 500, color: '#888', textDecoration: 'none', transition: 'all 0.2s', whiteSpace: 'nowrap' },
   linkActive: { background: 'rgba(100,255,218,0.1)', color: '#64ffda' },
